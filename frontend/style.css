@@ -1,0 +1,188 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3 {
+    color: #2c3e50;
+}
+
+/* Form Styling */
+.form-container, .dashboard, .transaction-list {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+#transaction-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#transaction-form input, #transaction-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;
+}
+
+#transaction-form button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#transaction-form button:hover {
+    background-color: #218838;
+}
+
+/* Dashboard & Chart */
+.dashboard {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+.chart-container {
+    width: 50%;
+}
+
+.summary-container {
+    width: 50%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.summary-container h3 {
+    margin: 10px 0;
+}
+
+#balance {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.filter-buttons {
+    margin: 15px 0;
+}
+
+.filter-buttons button {
+    padding: 8px 12px;
+    border: 1px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.filter-buttons button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+
+/* Tabel Transaksi */
+#transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#transaction-table th, #transaction-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#transaction-table th {
+    background-color: #f2f2f2;
+}
+
+#transaction-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Styling untuk tombol aksi di tabel */
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.action-buttons button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+}
+
+.edit-btn { background-color: #ffc107; }
+.delete-btn { background-color: #dc3545; }
+
+/* Utility class untuk menyembunyikan elemen */
+.hidden {
+    display: none;
+}
+
+
+/* Styling untuk Dashboard Baru */
+.dashboard-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filter-controls select {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Chart kiri lebih kecil */
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.chart-card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.chart-card h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+/* Override summary-container margin */
+.summary-container {
+    width: auto; /* Hapus lebar tetap */
+    margin-top: 20px;
+}

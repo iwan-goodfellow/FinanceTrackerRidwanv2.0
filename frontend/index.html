@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2 id="form-title">Tambah Transaksi Baru</h2>
+            <form id="transaction-form">
+                <input type="date" id="date" required>
+                <select id="type" required>
+                    <option value="expense">Pengeluaran</option>
+                    <option value="income">Pemasukan</option>
+                </select>
+                <select id="category" required></select>
+                <input type="number" id="amount" placeholder="Jumlah" required>
+                <button type="submit" id="submit-button">Tambah</button>
+                <button type="button" id="cancel-button" class="hidden">Batal</button>
+            </form>
+        </div>
+
+        <div class="dashboard-container">
+            <h2>Dashboard Visualisasi 📊</h2>
+            <div class="filter-controls">
+                <select id="filter-year"></select>
+                <select id="filter-month"></select>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Pemasukan vs Pengeluaran</h3>
+                    <canvas id="summary-chart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Rincian Pengeluaran per Kategori</h3>
+                    <canvas id="breakdown-bar-chart"></canvas>
+                </div>
+            </div>
+             <div class="summary-container">
+                <h3>Total Pemasukan: <span id="total-income">Rp 0</span></h3>
+                <h3>Total Pengeluaran: <span id="total-expense">Rp 0</span></h3>
+                <h3>Saldo: <span id="balance">Rp 0</span></h3>
+            </div>
+        </div>
+
+        <div class="transaction-list">
+            <h2>Riwayat Transaksi</h2>
+            <table id="transaction-table">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th><th>Tipe</th><th>Kategori</th><th>Jumlah</th><th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="transaction-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
