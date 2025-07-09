@@ -33,40 +33,29 @@ class Transaction(db.Model):
 # --- ROUTES / ENDPOINTS ---
 
 # Endpoint untuk menambah transaksi baru (sudah diupdate untuk menerima tanggal)
-@app.route('/transactions', methods=['POST'])
-def add_transaction():
-    data = request.get_json()
-    
-    # Konversi string tanggal dari frontend (format YYYY-MM-DD) ke objek datetime
-    transaction_date = datetime.strptime(data['date'], '%Y-%m-%d')
-    
-    new_transaction = Transaction(
-        type=data['type'],
-        category=data['category'],
-        amount=float(data['amount']),
-        date=transaction_date # Simpan tanggal dari input
-    )
-    db.session.add(new_transaction)
-    db.session.commit()
-    return jsonify(new_transaction.to_dict()), 201
+# ... (kode lain di app.py biarkan sama) ...
 
-# Endpoint untuk mengambil data transaksi (tetap sama)
+# Endpoint untuk mengambil data transaksi (GANTI FUNGSI INI)
 @app.route('/transactions', methods=['GET'])
 def get_transactions():
-    period = request.args.get('period', 'all')
-    
-    today = datetime.utcnow().date()
+    from sqlalchemy import extract # Import fungsi extract
+
+    # Ambil parameter dari URL, contoh: /transactions?year=2024&month=1
+    year = request.args.get('year', type=int)
+    month = request.args.get('month', type=int)
+
     query = Transaction.query
 
-    if period == 'week':
-        start_of_week = today - timedelta(days=today.weekday())
-        query = query.filter(Transaction.date >= start_of_week)
-    elif period == 'month':
-        start_of_month = today.replace(day=1)
-        query = query.filter(Transaction.date >= start_of_month)
-    elif period == 'year':
-        start_of_year = today.replace(day=1, month=1)
-        query = query.filter(Transaction.date >= start_of_year)
+    # Filter berdasarkan tahun jika parameter ada
+    if year:
+        query = query.filter(extract('year', Transaction.date) == year)
+    
+    # Filter berdasarkan bulan jika parameter ada
+    if month:
+        query = query.filter(extract('month', Transaction.date) == month)
+    
+    # Jika tidak ada parameter sama sekali, kembalikan semua data
+    # (berguna untuk inisialisasi)
     
     transactions = query.order_by(Transaction.date.desc()).all()
     
