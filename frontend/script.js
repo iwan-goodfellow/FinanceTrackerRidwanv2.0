@@ -104,11 +104,15 @@ function renderSummaryChart(income, expense) {
 /**
  * Menggambar chart Rincian Pengeluaran (Bar Chart)
  */
+// script.js
+
+/**
+ * Menggambar chart Rincian Pengeluaran (Horizontal Bar Chart)
+ */
 function renderBreakdownChart(transactions) {
     const ctx = document.getElementById('breakdown-bar-chart').getContext('2d');
     if (breakdownChart) breakdownChart.destroy();
 
-    // Kelompokkan pengeluaran berdasarkan kategori
     const expenseData = transactions
         .filter(t => t.type === 'expense')
         .reduce((acc, curr) => {
@@ -120,7 +124,7 @@ function renderBreakdownChart(transactions) {
     const data = Object.values(expenseData);
 
     breakdownChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'bar', // Tipe tetap 'bar'
         data: {
             labels: labels,
             datasets: [{
@@ -130,16 +134,19 @@ function renderBreakdownChart(transactions) {
             }]
         },
         options: {
+            // --- INI PERUBAHAN UTAMANYA ---
+            indexAxis: 'y', // Membuat bar menjadi horizontal
+            // -----------------------------
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: {
+                x: { // Sekarang kita atur skala X (horizontal) untuk nilai
                     beginAtZero: true
                 }
             },
             plugins: {
                 legend: {
-                    display: false // Sembunyikan legenda karena sudah jelas
+                    display: false
                 }
             }
         }
