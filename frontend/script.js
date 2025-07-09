@@ -18,7 +18,7 @@ let currentEditId = null;
 
 const categories = {
     income: ['Gaji', 'Bonus', 'Investasi', 'Lainnya'],
-    expense: ['Kuliner', 'Transportasi', 'Kesehatan', 'Pendidikan', 'Rumah', 'Sosial', 'Travel', 'Kantor', 'Lainnya']
+    expense: ['Kuliner', 'Transportasi', 'Kesehatan', 'Pendidikan', 'Rumah', 'Sosial', 'Travel', 'Kantor', 'Lifestyle', 'Lainnya']
 };
 
 const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
