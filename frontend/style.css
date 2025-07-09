@@ -181,6 +181,13 @@ h1, h2, h3 {
     text-align: center;
 }
 
+/* style.css */
+.chart-wrapper {
+    position: relative;
+    height: 350px; /* Atur tinggi pasti untuk wadah chart */
+    width: 100%;
+}
+
 /* Override summary-container margin */
 .summary-container {
     width: auto; /* Hapus lebar tetap */
