@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from datetime import datetime, timedelta
+from datetime import datetime
+from sqlalchemy import extract # Pastikan ini di-import
 
 # Inisialisasi Aplikasi Flask
 app = Flask(__name__)
@@ -18,7 +19,6 @@ class Transaction(db.Model):
     type = db.Column(db.String(10), nullable=False)
     category = db.Column(db.String(50), nullable=False)
     amount = db.Column(db.Float, nullable=False)
-    # Ubah default date menjadi tidak ada, karena akan diisi dari frontend
     date = db.Column(db.DateTime, nullable=False)
 
     def to_dict(self):
@@ -32,36 +32,40 @@ class Transaction(db.Model):
 
 # --- ROUTES / ENDPOINTS ---
 
-# Endpoint untuk menambah transaksi baru (sudah diupdate untuk menerima tanggal)
-# ... (kode lain di app.py biarkan sama) ...
+# FUNGSI UNTUK MENAMBAH DATA BARU (POST)
+@app.route('/transactions', methods=['POST'])
+def add_transaction():
+    data = request.get_json()
+    transaction_date = datetime.strptime(data['date'], '%Y-%m-%d')
+    
+    new_transaction = Transaction(
+        type=data['type'],
+        category=data['category'],
+        amount=float(data['amount']),
+        date=transaction_date
+    )
+    db.session.add(new_transaction)
+    db.session.commit()
+    return jsonify(new_transaction.to_dict()), 201
 
-# Endpoint untuk mengambil data transaksi (GANTI FUNGSI INI)
+# FUNGSI UNTUK MENGAMBIL DATA (GET)
 @app.route('/transactions', methods=['GET'])
 def get_transactions():
-    from sqlalchemy import extract # Import fungsi extract
-
-    # Ambil parameter dari URL, contoh: /transactions?year=2024&month=1
     year = request.args.get('year', type=int)
     month = request.args.get('month', type=int)
 
     query = Transaction.query
 
-    # Filter berdasarkan tahun jika parameter ada
     if year:
         query = query.filter(extract('year', Transaction.date) == year)
     
-    # Filter berdasarkan bulan jika parameter ada
     if month:
         query = query.filter(extract('month', Transaction.date) == month)
     
-    # Jika tidak ada parameter sama sekali, kembalikan semua data
-    # (berguna untuk inisialisasi)
-    
     transactions = query.order_by(Transaction.date.desc()).all()
-    
     return jsonify([t.to_dict() for t in transactions])
 
-# --- BARU: Endpoint untuk mengedit (update) transaksi ---
+# FUNGSI UNTUK MENGEDIT DATA (PUT)
 @app.route('/transactions/<int:id>', methods=['PUT'])
 def update_transaction(id):
     transaction = Transaction.query.get_or_404(id)
@@ -76,7 +80,7 @@ def update_transaction(id):
     db.session.commit()
     return jsonify(transaction.to_dict())
 
-# --- BARU: Endpoint untuk menghapus transaksi ---
+# FUNGSI UNTUK MENGHAPUS DATA (DELETE)
 @app.route('/transactions/<int:id>', methods=['DELETE'])
 def delete_transaction(id):
     transaction = Transaction.query.get_or_404(id)
